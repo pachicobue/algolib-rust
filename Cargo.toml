@@ -1,8 +1,17 @@
 [package]
 name = "algolib-rust"
 version = "0.1.0"
+authors = ["pachicobue <tigerssho@gmail.com>"]
 edition = "2021"
+rust-version = "1.70.0"
+description = "Algolib for Rust"
+repository = "https://github.com/pachicobue/algolib-rust"
+license = "MIT"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[package.metadata.docs.rs]
+rustdoc-args = ["--html-in-header", "katex.html"]
+
 [dependencies]
+num = "=0.4.1"

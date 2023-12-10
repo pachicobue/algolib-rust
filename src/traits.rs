@@ -1,0 +1,3 @@
+//! Traits
+
+pub mod algebra;
