@@ -14,4 +14,3 @@ license = "MIT"
 rustdoc-args = ["--html-in-header", "katex.html"]
 
 [dependencies]
-num = "=0.4.1"

@@ -1,5 +1,26 @@
-//! Ceil and floor division for positive and negative numbers.
-use num::{Integer, Signed};
+//! Integer division utilities.
+use std::ops::{Add, Div, Mul, Neg, Rem, Sub};
+
+trait DivFloor<Rhs = Self> {
+    type Output;
+    fn div_floor(self, rhs: Rhs) -> Self::Output;
+}
+
+impl<T: Add + Div + Sub> DivFloor for T {
+    type Output = T;
+    fn div_floor(self, rhs: T) -> T {
+        assert!(!rhs.is_zero());
+        if y.is_negative() {
+            div_floor(-x, -y)
+        } else {
+            if x.is_positive() {
+                x / y
+            } else {
+                (x - y.clone() + T::one()) / y
+            }
+        }
+    }
+}
 
 /// Floor division for positive and negative numbers.
 /// This function is equivalent to $`\lfloor x / y \rfloor`$ in mathematics.
