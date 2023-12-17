@@ -1,5 +1,4 @@
-//! Utility functions.
+//! 便利な関数をまとめたモジュール
 
-pub mod chminmax;
-// pub mod int_div;
-// pub mod mod_ops;
+pub mod chmin;
+pub mod floored_div;

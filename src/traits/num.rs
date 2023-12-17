@@ -1,29 +1,69 @@
-//! 数値に関するトレイト
-use std::ops::{Add, Mul, Neg};
+/// 基本的な数値型のトレイト
+use ::std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Rem, RemAssign, Sub, SubAssign};
 
-/// 加算の単位元0を持つことを表すトレイト
-pub trait Zero: Add<Output = Self> + Sized {
-    fn zero() -> Self;
+mod bounded;
+mod signed;
+mod zero_one;
+
+pub use bounded::*;
+pub use signed::*;
+pub use zero_one::*;
+
+/// (0,1,+,*,/,%,+=,-=,*=,/=,%=) が使える数値型
+pub trait Num:
+    PartialEq
+    + Zero
+    + One
+    + Add<Self, Output = Self>
+    + Sub<Self, Output = Self>
+    + Mul<Self, Output = Self>
+    + Div<Self, Output = Self>
+    + Rem<Self, Output = Self>
+    + AddAssign<Self>
+    + SubAssign<Self>
+    + MulAssign<Self>
+    + DivAssign<Self>
+    + RemAssign<Self>
+    + Add<&Self, Output = Self>
+    + Sub<&Self, Output = Self>
+    + Mul<&Self, Output = Self>
+    + Div<&Self, Output = Self>
+    + Rem<&Self, Output = Self>
+    + AddAssign<Self>
+    + SubAssign<Self>
+    + MulAssign<Self>
+    + DivAssign<Self>
+    + RemAssign<Self>
+{
 }
 
-/// 乗算の単位元1を持つことを表すトレイト
-pub trait One: Mul<Output = Self> + Sized {
-    fn one() -> Self;
+impl<T> Num for T where
+    T: PartialEq
+        + Zero
+        + One
+        + Add<Self, Output = Self>
+        + Sub<Self, Output = Self>
+        + Mul<Self, Output = Self>
+        + Div<Self, Output = Self>
+        + Rem<Self, Output = Self>
+        + AddAssign<Self>
+        + SubAssign<Self>
+        + MulAssign<Self>
+        + DivAssign<Self>
+        + RemAssign<Self>
+{
 }
 
-/// 符号付き数値に関するトレイト
-pub trait Signed: Neg<Output = Self> + PartialOrd + Zero {
-    fn abs(&self) -> Self;
-    fn signum(&self) -> Self;
-    fn is_positive(&self) -> bool;
-    fn is_negative(&self) -> bool;
-}
+pub trait Integer: Num + Ord + Eq {}
+pub trait Real: Num + PartialOrd {
+    fn nan() -> Self;
+    fn is_nan(&self) -> bool;
+    fn infinity() -> Self;
+    fn neg_infinity() -> Self;
+    fn is_infinity(&self) -> bool;
+    fn is_finite(&self) -> bool;
 
-/// 符号なし数値に関するトレイト
-pub trait Unsigned {}
-
-/// 有界な数値に関するトレイト
-pub trait Bounded: PartialOrd {
-    fn min_value() -> Self;
-    fn max_value() -> Self;
+    fn floor(&self) -> Self;
+    fn ceil(&self) -> Self;
+    fn round(&self) -> Self;
 }

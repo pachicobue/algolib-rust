@@ -2,13 +2,14 @@
 
 /// chmin関数を定義するトレイト
 pub trait Chmin {
-    fn chmin(&mut self, other: Self) -> bool;
+    /// `x`を`$\mathrm{min}(x,y)$`で更新できたらtrueを返す
+    fn chmin(&mut self, y: Self) -> bool;
 }
 
 impl<T: PartialOrd> Chmin for T {
-    fn chmin(&mut self, other: Self) -> bool {
-        if *self > other {
-            *self = other;
+    fn chmin(&mut self, y: Self) -> bool {
+        if *self > y {
+            *self = y;
             true
         } else {
             false
@@ -18,13 +19,14 @@ impl<T: PartialOrd> Chmin for T {
 
 /// chmax関数を定義するトレイト
 pub trait Chmax {
-    fn chmax(&mut self, other: Self) -> bool;
+    /// `x`を`$\mathrm{max}(x,y)$`で更新できたらtrueを返す
+    fn chmax(&mut self, y: Self) -> bool;
 }
 
 impl<T: PartialOrd> Chmax for T {
-    fn chmax(&mut self, other: Self) -> bool {
-        if *self < other {
-            *self = other;
+    fn chmax(&mut self, y: Self) -> bool {
+        if *self < y {
+            *self = y;
             true
         } else {
             false
@@ -43,6 +45,12 @@ mod tests {
         assert_eq!(a, 1);
         assert!(a.chmin(-1));
         assert_eq!(a, -1);
+
+        let mut a = 0.8;
+        assert!(!a.chmin(10.0));
+        assert_eq!(a, 0.8);
+        assert!(a.chmin(-10.0));
+        assert_eq!(a, -10.0);
     }
 
     #[test]
@@ -52,5 +60,11 @@ mod tests {
         assert_eq!(a, 1);
         assert!(a.chmax(10));
         assert_eq!(a, 10);
+
+        let mut a = 0.8;
+        assert!(!a.chmax(-10.0));
+        assert_eq!(a, 0.8);
+        assert!(a.chmax(10.0));
+        assert_eq!(a, 10.0);
     }
 }

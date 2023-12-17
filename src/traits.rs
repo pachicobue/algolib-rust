@@ -1,4 +1,3 @@
-//! Traits
+//! トレイトの定義
 
-// pub mod algebra;
 pub mod num;
